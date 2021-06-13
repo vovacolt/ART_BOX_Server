@@ -31,8 +31,6 @@ export class UserSQL extends BaseSQL
         catch (e) 
         {
             console.log(e);
-
-            this.errorSys.errorEx(e, 'get_art_description_by_id', 'Failed to get description by id');
         }
 
         return res;
@@ -59,9 +57,7 @@ export class UserSQL extends BaseSQL
         
         catch (e) 
         {
-            //console.log(e);
-            
-            this.errorSys.errorEx(e, 'get_count_of_art', 'Failed to get count of art');
+            console.log(e);
         }
 
         return res;

@@ -7,7 +7,7 @@ export const db = require('knex')({
     connection: {
       host : '127.0.0.1',
       user : 'root',
-      password : 'vovacolt170999',
+      password : '1234567890',
       database : 'art_box_db',
       port: 3007
     }
@@ -18,4 +18,4 @@ export interface SocketClientI {
 }
 
 /* clients */
-export const aSocketClient: SocketClientI = {};
+export const SocketClient: SocketClientI = {};

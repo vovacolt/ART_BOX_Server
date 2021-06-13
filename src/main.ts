@@ -1,17 +1,16 @@
 import * as net from "net";
 const moment = require('moment');
 
-import { fGenerateToken } from "./Lib/HashFunc";
-import { aSocketClient, db } from "./Module/System/db";
-import * as AAClasses from '@a-a-game-studio/aa-classes/lib';
-import { faUserLogin, faCountArt } from "./Module/Clients/Client_Controller";
-import { fBaseRequest, fRequest, fResponse } from "./Module/System/ResponseSys";
-import { UserLogin } from "./Module/Clients/Client_Response";
+import { GeneratedToken } from "./Lib/HashFunc";
+import { SocketClient, db } from "./Module/System/db";
+import { GetArtDiscription, GetCountArt } from "./Module/Clients/Client_Controller";
+import { BaseRequestI, Request, Response } from "./Module/System/ResponseSys";
+import { UserAPI } from "./Module/Clients/Client_Response";
 
 /**
  * The current date
  */
-const fGetNowDataStr = (): string => moment().format('DD.MM.YYYY HH:mm:ss');
+const GetNowDataStr = (): string => moment().format('DD.MM.YYYY HH:mm:ss');
 
 /**
  * Server handler
@@ -19,35 +18,34 @@ const fGetNowDataStr = (): string => moment().format('DD.MM.YYYY HH:mm:ss');
 const server = net.createServer((socket: net.Socket) => {
 
     /* we generate a token to the client */
-    const clientToken = fGenerateToken();
-    aSocketClient[clientToken] = true;
+    const clientToken = GeneratedToken();
+    SocketClient[clientToken] = true;
 
-    console.log(`[${fGetNowDataStr()}] Client connect ${clientToken}`);
+    console.log(`[${GetNowDataStr()}] Client connect ${clientToken}`);
 
 
     /* receiving data from a client */
     socket.on('data', async (data: Buffer) => {
-        const errorSys = new AAClasses.Components.ErrorSys();
 
-        console.log(`[${fGetNowDataStr()}] Data from [${clientToken}]: `, data.toString());
+        console.log(`[${GetNowDataStr()}] Data from [${clientToken}]: `, data.toString());
 
         // router
 
-        const request: fBaseRequest = fRequest(data, clientToken);
+        const request: BaseRequestI = Request(data, clientToken);
 
         /* connect login controller */
-        if (request.sRoute == UserLogin.sRequestRoute) 
+        if (request.sRoute == UserAPI.sRequestRoute) 
         {
-            await faUserLogin(socket, request, errorSys, db);
+            await GetArtDiscription(request, socket, db);
         }
-        else if (request.sRoute == UserLogin.sRequestCount)
+        else if (request.sRoute == UserAPI.sRequestCount)
         {
-            await faCountArt(socket, request, errorSys, db);
+            await GetCountArt(request, socket, db);
         } 
         else 
         {
             /* if the route did not match, sends empty line */
-            fResponse(socket, {
+            Response(socket, {
                 sRoute: '',
                 ok:true,
                 data: {},
@@ -59,20 +57,20 @@ const server = net.createServer((socket: net.Socket) => {
 
     /* client disconnect */
     socket.on('end', () => {
-        delete aSocketClient[clientToken];
-        console.log(`[${fGetNowDataStr()}] Client ${clientToken} disconnect`);
+        delete SocketClient[clientToken];
+        console.log(`[${GetNowDataStr()}] Client ${clientToken} disconnect`);
     });
 
     /* socket error */
     socket.on('error', (err) => {
-        console.log(`[${fGetNowDataStr()}] Error:`, err);
+        console.log(`[${GetNowDataStr()}] Error:`, err);
     });
 
 });
 
 /* server error */
 server.on('error', (err: any) => {
-    console.log(`[${fGetNowDataStr()}] Error:`, err);
+    console.log(`[${GetNowDataStr()}] Error:`, err);
 });
 
 

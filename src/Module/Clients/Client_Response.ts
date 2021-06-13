@@ -4,7 +4,8 @@ import { ArtI, CountI } from "./Client_Art_Discription";
 /**
  * User Login
  */
-export namespace UserLogin {
+export namespace UserAPI 
+{
 
    export const sRequestRoute = 'id_req';
  
@@ -20,10 +21,7 @@ export namespace UserLogin {
        id: number;
        widget_id: string;
     }
-   
-    //export interface RequestCountI 
-    //{
-    //}
+
 
     export interface ResponseI extends BaseResponseI 
     {

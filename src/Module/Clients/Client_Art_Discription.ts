@@ -1,5 +1,3 @@
-import { BaseResponseI } from "../System/ResponseSys";
-
 export interface ArtI 
 {
     count?: number;

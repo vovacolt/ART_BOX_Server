@@ -1,4 +1,5 @@
-export interface ConfI {
+export interface ConfI 
+{
     env: string; // prod - dev
     mysql: {
         client: string;
@@ -12,15 +13,12 @@ export interface ConfI {
             min: number;
             max: number;
         };
-        //migrations: {
-            //tableName: string;
-            //directory: string;
-        //};
-        //acquireConnectionTimeout: number;
+        migrations: {
+            tableName: string;
+            directory: string;
+        };
+        acquireConnectionTimeout: number;
     };
-    redis?: {
-        url: string;
-    };  
     common: {
         port: number;
     };

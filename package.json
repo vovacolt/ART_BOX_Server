@@ -1,18 +1,16 @@
 {
-  "name": "ue4-socket-io",
+  "name": "art-box-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "tcp": "./node_modules/.bin/node ./build/tcpSrvLogin.js",
+    "tcp": "./node_modules/.bin/node ./build/main.js",
     "wtcp": "tsc-watch --outDir ./build --onSuccess \"npm run tcp\""
   },
   "author": "",
   "license": "GPL",
   "dependencies": {
-    "@a-a-game-studio/aa-classes": "^1.0.12",
-    "@a-a-game-studio/aa-components": "^1.0.34",
     "@types/moment": "^2.13.0",
     "@types/node": "^14.0.6",
     "conf": "^8.0.0",

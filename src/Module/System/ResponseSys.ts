@@ -1,6 +1,5 @@
 import * as net from "net";
 
-
 /**
  * Basic client response
  */
@@ -15,7 +14,7 @@ export interface BaseResponseI
 /**
  * basic request from client
  */
-export interface fBaseRequest 
+export interface BaseRequestI 
 {
     sClientToken: string;
     sRoute: string;
@@ -29,9 +28,9 @@ export interface fBaseRequest
  * @param data 
  * @param sClientToken 
  */
-export const fRequest = (data: Buffer, sClientToken: string): fBaseRequest => 
+export const Request = (data: Buffer, sClientToken: string): BaseRequestI => 
 {
-    let out: fBaseRequest = 
+    let out: BaseRequestI = 
     {
         sRoute: '',
         data: null,
@@ -42,7 +41,7 @@ export const fRequest = (data: Buffer, sClientToken: string): fBaseRequest =>
 
     try 
     {
-        const req: fBaseRequest = JSON.parse(data.toString());
+        const req: BaseRequestI = JSON.parse(data.toString());
 
         if (req.sRoute) 
         {
@@ -73,7 +72,7 @@ export const fRequest = (data: Buffer, sClientToken: string): fBaseRequest =>
  * @param socket 
  * @param response 
  */
-export const fResponse = (socket: net.Socket, response: BaseResponseI) => 
+export const Response = (socket: net.Socket, response: BaseResponseI) => 
 {
     socket.write(JSON.stringify(response))
 }
